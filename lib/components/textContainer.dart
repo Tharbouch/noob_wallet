@@ -21,6 +21,14 @@ class TextContainer extends StatelessWidget {
       decoration: BoxDecoration(
         color: const Color(0xFFf4f5f5),
         borderRadius: BorderRadius.circular(29),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.blueGrey.withOpacity(0.2),
+            spreadRadius: 5,
+            blurRadius: 7,
+            offset: const Offset(0, 2), // changes position of shadow
+          ),
+        ],
       ),
       child: child,
     );

@@ -5,6 +5,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:noob_wallet/Screens/signup/components/background.dart';
 import 'package:noob_wallet/components/colors.dart';
+import 'package:noob_wallet/components/model.dart';
 import 'package:noob_wallet/components/passwordField.dart';
 import 'package:noob_wallet/components/roundedButton.dart';
 import 'package:noob_wallet/components/textContainer.dart';
@@ -48,7 +49,7 @@ class _SignUpState extends State<SignUp> {
               ),
               SvgPicture.asset(
                 "assets/icons/signup.svg",
-                height: size.height * 0.2,
+                height: size.height * 0.15,
               ),
               const SizedBox(
                 height: 4,
@@ -102,7 +103,7 @@ class _SignUpState extends State<SignUp> {
                       child: InputField(
                         controller: emailController,
                         prefixIcon: const Icon(
-                          Icons.person_pin,
+                          Icons.email_outlined,
                           color: lightColor,
                         ),
                         hintText: 'Email',
@@ -154,7 +155,7 @@ class _SignUpState extends State<SignUp> {
                     RoundedButton(
                       text: 'SignUp',
                       press: () {
-                        //signIn(emailController.text, passwordController.text);
+                        signUp(emailController.text, passwordController.text);
                       },
                     ),
                   ],
@@ -165,5 +166,71 @@ class _SignUpState extends State<SignUp> {
         ),
       ),
     );
+  }
+
+  void signUp(String email, String password) async {
+    if (_formKey.currentState!.validate()) {
+      try {
+        await _auth
+            .createUserWithEmailAndPassword(email: email, password: password)
+            .then((value) => {postDetailsToFirestore()})
+            .catchError((e) {
+          Fluttertoast.showToast(msg: e!.message);
+        });
+      } on FirebaseAuthException catch (error) {
+        switch (error.code) {
+          case "invalid-email":
+            errorMessage = "Your email address appears to be malformed.";
+            break;
+          case "wrong-password":
+            errorMessage = "Your password is wrong.";
+            break;
+          case "user-not-found":
+            errorMessage = "User with this email doesn't exist.";
+            break;
+          case "user-disabled":
+            errorMessage = "User with this email has been disabled.";
+            break;
+          case "too-many-requests":
+            errorMessage = "Too many requests";
+            break;
+          case "operation-not-allowed":
+            errorMessage = "Signing in with Email and Password is not enabled.";
+            break;
+          default:
+            errorMessage = "An undefined Error happened.";
+        }
+        Fluttertoast.showToast(msg: errorMessage!);
+        print(error.code);
+      }
+    }
+  }
+
+  postDetailsToFirestore() async {
+    // calling our firestore
+    // calling our user model
+    // sedning these values
+
+    FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+    User? user = _auth.currentUser;
+
+    UserModel userModel = UserModel();
+
+    // writing all the values
+    userModel.email = user!.email;
+    userModel.uid = user.uid;
+    userModel.firstName = firstNameController.text;
+    userModel.secondName = secondNameController.text;
+    await firebaseFirestore
+        .collection("users")
+        .doc(user.uid)
+        .set(userModel.toMap());
+    Fluttertoast.showToast(msg: "Account created successfully :) ");
+
+    /*Navigator.pushAndRemoveUntil(
+        (context),
+        MaterialPageRoute(builder: (context) => HomeScreen()),
+        (route) => false);
+  }*/
   }
 }

@@ -20,24 +20,28 @@ class RoundedButton extends StatelessWidget {
     Size size = MediaQuery.of(context).size;
     return SizedBox(
       width: size.width * 0.8,
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(29),
-        child: ElevatedButton(
-          child: Text(
-            text,
-            style: TextStyle(
-              color: textColor,
-              fontFamily: 'OpenSans',
-              fontSize: 16,
-              fontWeight: FontWeight.w500,
+      child: ElevatedButton(
+        child: Text(
+          text,
+          style: TextStyle(
+            color: textColor,
+            fontFamily: 'OpenSans',
+            fontSize: 16,
+            fontWeight: FontWeight.w500,
+          ),
+        ),
+        style: ButtonStyle(
+          backgroundColor: MaterialStateProperty.all(mainColor),
+          padding: MaterialStateProperty.all(const EdgeInsets.all(20)),
+          shadowColor: MaterialStateProperty.all<Color>(
+              Colors.blueGrey.withOpacity(0.2)),
+          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+            RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(35.0),
             ),
           ),
-          style: ElevatedButton.styleFrom(
-            primary: color,
-            padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 20),
-          ),
-          onPressed: () => press(),
         ),
+        onPressed: () => press(),
       ),
     );
   }

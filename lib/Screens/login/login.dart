@@ -45,6 +45,9 @@ class _LoginState extends State<Login> {
               "assets/icons/login.svg",
               height: size.height * 0.25,
             ),
+            const SizedBox(
+              height: 15,
+            ),
             Form(
               key: _formKey,
               child: Column(

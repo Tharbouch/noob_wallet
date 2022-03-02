@@ -37,9 +37,9 @@ class PasswordField extends StatelessWidget {
           borderSide: BorderSide(color: lightColor),
         ),
         border: InputBorder.none,
-        enabledBorder: const UnderlineInputBorder(
+        /*enabledBorder: const UnderlineInputBorder(
           borderSide: BorderSide(color: Color.fromARGB(255, 93, 122, 126)),
-        ),
+        ),*/
       ),
     );
   }
