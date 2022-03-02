@@ -6,8 +6,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:noob_wallet/Screens/signup/signup.dart';
 import 'package:noob_wallet/Screens/welcome/welcome.dart';
 import 'package:noob_wallet/components/colors.dart';
-import 'package:noob_wallet/components/emailContainer.dart';
-import 'package:noob_wallet/components/passwordContrainer.dart';
+import 'package:noob_wallet/components/inputField.dart';
+import 'package:noob_wallet/components/passwordField.dart';
 import 'package:noob_wallet/components/roundedButton.dart';
 import 'package:noob_wallet/components/textContainer.dart';
 
@@ -50,13 +50,41 @@ class _LoginState extends State<Login> {
               child: Column(
                 children: <Widget>[
                   TextContainer(
-                    child: EmailContainer(
-                      emailController: emailController,
+                    child: InputField(
+                      controller: emailController,
+                      prefixIcon: const Icon(
+                        Icons.person_pin,
+                        color: lightColor,
+                      ),
+                      hintText: 'Email',
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return ("Please Enter Your Email");
+                        }
+                        // reg expression for email validation
+                        if (!RegExp("^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+.[a-z]")
+                            .hasMatch(value)) {
+                          return ("Please Enter a valid email");
+                        }
+                        return null;
+                      },
                     ),
                   ),
                   TextContainer(
-                    child: PasswordContainer(
-                        passwordController: passwordController),
+                    child: PasswordField(
+                      controller: passwordController,
+                      hintText: 'Password',
+                      validator: (value) {
+                        RegExp regex = RegExp(r'^.{6,}$');
+                        if (value!.isEmpty) {
+                          return ("Password is required for login");
+                        }
+                        if (!regex.hasMatch(value)) {
+                          return ("Enter Valid Password(Min. 6 Character)");
+                        }
+                        return null;
+                      },
+                    ),
                   ),
                   const SizedBox(
                     height: 20,
