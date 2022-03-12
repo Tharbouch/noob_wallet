@@ -6,6 +6,7 @@ class Background extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    //setting up login background
     Size size = MediaQuery.of(context).size;
     return SizedBox(
       width: double.infinity,

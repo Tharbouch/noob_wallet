@@ -20,6 +20,7 @@ class SignUp extends StatefulWidget {
 }
 
 class _SignUpState extends State<SignUp> {
+  //setting up input variables and firebase environment
   final _auth = FirebaseAuth.instance;
   String? errorMessage;
   final _formKey = GlobalKey<FormState>();
@@ -29,6 +30,9 @@ class _SignUpState extends State<SignUp> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   final confirmPasswordController = TextEditingController();
+
+  ///
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -194,6 +198,9 @@ class _SignUpState extends State<SignUp> {
     );
   }
 
+  //add new user information to firebase store ,setting up log in info and cheking the given informations
+
+  //info cheking and setting up log in info
   void signUp(String email, String password) async {
     if (_formKey.currentState!.validate()) {
       try {
@@ -237,6 +244,7 @@ class _SignUpState extends State<SignUp> {
         context, MaterialPageRoute(builder: (context) => const Login()));
   }
 
+  //add new user information to firebase store
   postDetailsToFirestore() async {
     // calling our firestore
     // calling our user model

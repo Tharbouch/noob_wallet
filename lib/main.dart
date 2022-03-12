@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
         primaryColor: mainColor,
         scaffoldBackgroundColor: Color.fromARGB(255, 241, 245, 245),
       ),
-      home: const WelcomeScreen(),
+      home: const WelcomeScreen(), //starting the application
     );
   }
 }

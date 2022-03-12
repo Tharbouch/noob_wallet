@@ -20,11 +20,13 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
+  // setting up input variables and firebase environment
   final _formKey = GlobalKey<FormState>();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final _auth = FirebaseAuth.instance;
   String? errorMessage;
+////
 
   @override
   Widget build(BuildContext context) {
@@ -136,11 +138,13 @@ class _LoginState extends State<Login> {
   navigateToSignUp() async {
     Navigator.pushAndRemoveUntil(
       context,
-      MaterialPageRoute(builder: (builder) => SignUp()),
+      MaterialPageRoute(
+          builder: (builder) => SignUp()), // redirecting to SignUP page
       (route) => false,
     );
   }
 
+// fetching data from firebase and check if the user informations are correct
   void signIn(String email, String password) async {
     if (_formKey.currentState!.validate()) {
       try {
@@ -151,7 +155,9 @@ class _LoginState extends State<Login> {
                 Fluttertoast.showToast(msg: "Login Successful"),
                 Navigator.pushAndRemoveUntil(
                   context,
-                  MaterialPageRoute(builder: (builder) => HomeScreen()),
+                  MaterialPageRoute(
+                      builder: (builder) =>
+                          HomeScreen()), //redirecting to home page
                   (route) => false,
                 ),
               },
