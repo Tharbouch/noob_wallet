@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:noob_wallet/Screens/home/components/body.dart';
 import 'package:noob_wallet/Screens/login/login.dart';
 import 'package:noob_wallet/components/colors.dart';
 import 'package:noob_wallet/components/widgets.dart';
@@ -53,6 +54,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         )),
       ),
+      body: const BodyHome(),
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
         items: _bottomTabs
