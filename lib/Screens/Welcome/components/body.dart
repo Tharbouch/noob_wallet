@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:noob_wallet/Screens/login/login.dart';
+import 'package:noob_wallet/Screens/signup/signup.dart';
 import 'package:noob_wallet/Screens/welcome/components/background.dart';
 import 'package:noob_wallet/components/roundedButton.dart';
 
@@ -38,7 +38,7 @@ class Body extends StatelessWidget {
               press: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const Login()),
+                  MaterialPageRoute(builder: (context) => const SignUp()),
                 );
               },
             ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:noob_wallet/Screens/home/home.dart';
 import 'package:noob_wallet/Screens/login/components/background.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -133,8 +134,11 @@ class _LoginState extends State<Login> {
   }
 
   navigateToSignUp() async {
-    Navigator.push(
-        context, MaterialPageRoute(builder: (context) => const SignUp()));
+    Navigator.pushAndRemoveUntil(
+      context,
+      MaterialPageRoute(builder: (builder) => SignUp()),
+      (route) => false,
+    );
   }
 
   void signIn(String email, String password) async {
@@ -145,8 +149,11 @@ class _LoginState extends State<Login> {
             .then(
               (uid) => {
                 Fluttertoast.showToast(msg: "Login Successful"),
-                Navigator.of(context).pushReplacement(MaterialPageRoute(
-                    builder: (context) => const WelcomeScreen())),
+                Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute(builder: (builder) => HomeScreen()),
+                  (route) => false,
+                ),
               },
             );
       } on FirebaseAuthException catch (error) {

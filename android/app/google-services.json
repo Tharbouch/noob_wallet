@@ -1,33 +1,33 @@
 {
   "project_info": {
-    "project_number": "372062860997",
-    "project_id": "noob-wallet",
-    "storage_bucket": "noob-wallet.appspot.com"
+    "project_number": "1094097808001",
+    "project_id": "wallet-projet",
+    "storage_bucket": "wallet-projet.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:372062860997:android:f57716683f78c92e6122ac",
+        "mobilesdk_app_id": "1:1094097808001:android:22ac1a2a0fed2b19a07b80",
         "android_client_info": {
           "package_name": "com.example.noob_wallet"
         }
       },
       "oauth_client": [
         {
-          "client_id": "372062860997-ss5bvcuk5vnfjm085vstk2b6gdn3mhhu.apps.googleusercontent.com",
+          "client_id": "1094097808001-8r5916gbpftu9hu3kpulqlee31pambjh.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyC0pyGSrEuG-qUM4ZOLuOty9ZYwmaknuCE"
+          "current_key": "AIzaSyACIhsffmv0qwpD4cyo3LOUrpQHLF8iAw0"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "372062860997-ss5bvcuk5vnfjm085vstk2b6gdn3mhhu.apps.googleusercontent.com",
+              "client_id": "1094097808001-8r5916gbpftu9hu3kpulqlee31pambjh.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

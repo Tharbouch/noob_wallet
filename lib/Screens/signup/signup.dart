@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:noob_wallet/Screens/login/login.dart';
 import 'package:noob_wallet/Screens/signup/components/background.dart';
 import 'package:noob_wallet/components/colors.dart';
 import 'package:noob_wallet/components/model.dart';
@@ -158,6 +159,31 @@ class _SignUpState extends State<SignUp> {
                         signUp(emailController.text, passwordController.text);
                       },
                     ),
+                    const SizedBox(
+                      height: 5,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        const Text(
+                          "Already have an account?",
+                          style: TextStyle(
+                            color: mainColor,
+                            fontWeight: FontWeight.w400,
+                          ),
+                        ),
+                        GestureDetector(
+                          child: const Text(
+                            "Login",
+                            style: TextStyle(
+                              color: lightColor,
+                              fontWeight: FontWeight.w700,
+                            ),
+                          ),
+                          onTap: navigateToLogIn,
+                        ),
+                      ],
+                    )
                   ],
                 ),
               )
@@ -206,6 +232,11 @@ class _SignUpState extends State<SignUp> {
     }
   }
 
+  navigateToLogIn() async {
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => const Login()));
+  }
+
   postDetailsToFirestore() async {
     // calling our firestore
     // calling our user model
@@ -227,10 +258,10 @@ class _SignUpState extends State<SignUp> {
         .set(userModel.toMap());
     Fluttertoast.showToast(msg: "Account created successfully :) ");
 
-    /*Navigator.pushAndRemoveUntil(
-        (context),
-        MaterialPageRoute(builder: (context) => HomeScreen()),
-        (route) => false);
-  }*/
+    Navigator.pushAndRemoveUntil(
+      context,
+      MaterialPageRoute(builder: (builder) => navigateToLogIn()),
+      (route) => false,
+    );
   }
 }
