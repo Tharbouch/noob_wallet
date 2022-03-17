@@ -54,9 +54,9 @@ class Balance extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 5),
+      padding: const EdgeInsets.fromLTRB(2, 0, 20, 0),
       child: card(
-        width: MediaQuery.of(context).size.width - 50,
+        width: MediaQuery.of(context).size.width * 0.9,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,

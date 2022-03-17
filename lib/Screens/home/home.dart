@@ -54,7 +54,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         )),
       ),
-      body: const BodyHome(),
+      body: _buildScreen(),
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
         items: _bottomTabs
@@ -100,7 +100,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget _buildScreen() {
     switch (_currentItem) {
       case TabItem.home:
-        return HomeScreen();
+        return BodyHome();
       case TabItem.transactionsHistory:
       // return HomeScreen();
       case TabItem.news:
@@ -108,7 +108,7 @@ class _HomeScreenState extends State<HomeScreen> {
       case TabItem.setting:
       // return HomeScreen()
       default:
-        return HomeScreen();
+        return BodyHome();
     }
   }
 
