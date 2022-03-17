@@ -17,7 +17,7 @@ class Body extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             const Text(
-              "Welcome to Noob Wallet",
+              "Welcome To Noob Wallet",
               style: TextStyle(
                 fontFamily: 'OpenSans',
                 fontSize: 22.0,
@@ -25,14 +25,14 @@ class Body extends StatelessWidget {
               ),
             ),
             const SizedBox(
-              height: 20,
+              height: 40,
             ),
             SvgPicture.asset(
               "assets/icons/logo.svg",
-              height: size.height * 0.42,
+              height: size.height * 0.30,
             ),
             const SizedBox(
-              height: 20,
+              height: 40,
             ),
             RoundedButton(
               text: 'Get Started',

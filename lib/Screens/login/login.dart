@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:noob_wallet/Screens/home/home.dart';
 import 'package:noob_wallet/Screens/login/components/background.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:noob_wallet/Screens/redirector/redirect.dart';
 import 'package:noob_wallet/Screens/signup/signup.dart';
-import 'package:noob_wallet/Screens/welcome/welcome.dart';
 import 'package:noob_wallet/components/colors.dart';
 import 'package:noob_wallet/components/inputField.dart';
 import 'package:noob_wallet/components/passwordField.dart';
@@ -81,12 +80,12 @@ class _LoginState extends State<Login> {
                       controller: passwordController,
                       hintText: 'Password',
                       validator: (value) {
-                        RegExp regex = RegExp(r'^.{6,}$');
+                        RegExp regex = RegExp(r'^.{8,}$');
                         if (value!.isEmpty) {
                           return ("Password is required for login");
                         }
                         if (!regex.hasMatch(value)) {
-                          return ("Enter Valid Password(Min. 6 Character)");
+                          return ("Enter Valid Password(Min. 8 Character)");
                         }
                         return null;
                       },
@@ -157,7 +156,7 @@ class _LoginState extends State<Login> {
                   context,
                   MaterialPageRoute(
                       builder: (builder) =>
-                          HomeScreen()), //redirecting to home page
+                          const Redirector()), //redirecting to home page
                   (route) => false,
                 ),
               },

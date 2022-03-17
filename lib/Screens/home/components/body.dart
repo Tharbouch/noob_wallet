@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:noob_wallet/Screens/home/components/coinCard.dart';
 import 'package:noob_wallet/Screens/home/components/coinModel.dart';
 import 'package:noob_wallet/components/widgets.dart';
@@ -16,28 +17,33 @@ class BodyHome extends StatefulWidget {
 class _BodyHomeState extends State<BodyHome> {
   Future<List<Coin>> fetchCoin() async {
     coinList = [];
+    bool isloading = true;
     // hena kayn api menin kanjibo data
 
     final response = await http.get(Uri.parse(
-        'https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=bitcoin%2Cethereum%2Cripple%2Csolana&order=market_cap_desc&per_page=100&page=1&sparkline=false'));
+        'https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=bitcoin%2Cethereum%2Csolana%2Cripple&order=market_cap_desc&per_page=100&page=1&sparkline=false'));
 
     if (response.statusCode == 200) {
       List<dynamic> values = [];
       values = json.decode(response.body);
-      if (values.length > 0) {
+      var size = values.length;
+      if (values.isNotEmpty) {
         for (int i = 0; i < values.length; i++) {
           if (values[i] != null) {
             Map<String, dynamic> map = values[i];
             coinList.add(Coin.fromJson(map));
           }
         }
-
-        setState(() {
-          coinList;
-        });
+        if (mounted) {
+          setState(() {
+            coinList;
+          });
+        }
       }
+      coinList = coinList.sublist(0, size);
       return coinList;
     } else {
+      Fluttertoast.showToast(msg: 'Failed to load coins');
       throw Exception('Failed to load coins');
     }
   }
@@ -46,7 +52,8 @@ class _BodyHomeState extends State<BodyHome> {
   void initState() {
     fetchCoin();
     //hena lwe9t bash idir reload l data men daq api
-    Timer.periodic(const Duration(seconds: 5), (timer) => fetchCoin());
+
+    Timer.periodic(const Duration(seconds: 2), (timer) => fetchCoin());
     super.initState();
   }
 
@@ -63,18 +70,10 @@ class _BodyHomeState extends State<BodyHome> {
             const SizedBox(
               width: 20,
             ),
-            GestureDetector(
-              onTap: () {
-                /* Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => DetailWalletScreen()),
-                );*/
-              },
-              child: Balance(context: context, total: '\$39.589'),
-            ),
+            Balance(context: context, total: '\$39.589'),
           ]),
         ),
-        SizedBox(
+        const SizedBox(
           height: 15,
         ),
         Expanded(
@@ -85,8 +84,7 @@ class _BodyHomeState extends State<BodyHome> {
               child: Column(
                 children: <Widget>[
                   ListView.builder(
-                    //scrollDirection: Axis.vertical,
-                    physics: NeverScrollableScrollPhysics(),
+                    physics: const NeverScrollableScrollPhysics(),
                     shrinkWrap: true,
                     itemCount: coinList.length,
                     itemBuilder: (context, index) {
