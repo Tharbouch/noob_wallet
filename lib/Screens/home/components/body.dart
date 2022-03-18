@@ -36,7 +36,7 @@ class _BodyHomeState extends State<BodyHome> {
         }
         if (mounted) {
           setState(() {
-            coinList;
+            isloading = false;
           });
         }
       }
@@ -50,11 +50,9 @@ class _BodyHomeState extends State<BodyHome> {
 
   @override
   void initState() {
-    fetchCoin();
     //hena lwe9t bash idir reload l data men daq api
-
-    Timer.periodic(const Duration(seconds: 2), (timer) => fetchCoin());
     super.initState();
+    Timer.periodic(const Duration(seconds: 2), (timer) => fetchCoin());
   }
 
   @override
