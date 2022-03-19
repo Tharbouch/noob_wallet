@@ -3,9 +3,11 @@ import 'package:candlesticks/candlesticks.dart';
 import 'package:http/http.dart' as http;
 
 class ChartAPI {
-  static Future<List<Candle>> fetchChartData() async {
+  static Future<List<Candle>> fetchChartData({required String id}) async {
     final response = await http.get(Uri.parse(
-        'https://api.binance.com/api/v3/klines?symbol=BTCUSDT&interval=1m'));
+        'https://api.binance.com/api/v3/klines?symbol=' +
+            id +
+            'USDT&interval=1m'));
 
     if (response.statusCode == 200) {
       List<Candle> datacChart = [];

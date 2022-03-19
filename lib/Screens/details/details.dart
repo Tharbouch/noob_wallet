@@ -1,7 +1,8 @@
 import 'dart:async';
+import 'dart:convert';
 
+import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
-import 'package:noob_wallet/Screens/details/components/chartmodel.dart';
 import 'package:noob_wallet/Screens/details/components/fetchchartdata.dart';
 import 'package:noob_wallet/Screens/details/components/status.dart';
 import 'package:noob_wallet/Screens/redirector/redirect.dart';
@@ -21,22 +22,43 @@ class DetailsScreen extends StatefulWidget {
 class _DetailsScreenState extends State<DetailsScreen> {
   _DetailsScreenState({required this.text});
   final String text;
+
   //int activeIndex = 0;
 
   List<Candle> candles = [];
   bool isloading = true;
+  String idCoin = '';
 
   //final List<String> chartTimes = ["Today", "1W", "1M", "3M", "6M", "1Y"];
+  Future<void> getId() async {
+    final response = await http.get(Uri.parse(
+        'https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&sparkline=false'));
+
+    if (response.statusCode == 200) {
+      for (var i in jsonDecode(response.body)) {
+        if (i['name'] == text) {
+          idCoin = i['symbol'].toString().toUpperCase();
+        }
+      }
+      setState(() {
+        isloading = false;
+      });
+    } else {
+      throw Exception('Failed to load symbol');
+    }
+  }
 
   @override
   void initState() {
     super.initState();
-    getChartData();
-    Timer.periodic(const Duration(seconds: 3), (timer) => getChartData());
+    getId();
+    getChartData(id: idCoin);
+    Timer.periodic(
+        const Duration(seconds: 3), (timer) => getChartData(id: idCoin));
   }
 
-  Future<void> getChartData() async {
-    candles = await ChartAPI.fetchChartData();
+  Future<void> getChartData({required String id}) async {
+    candles = await ChartAPI.fetchChartData(id: id);
     setState(() {
       isloading = false;
     });
