@@ -7,6 +7,7 @@ import 'package:noob_wallet/Screens/details/components/fetchchartdata.dart';
 import 'package:noob_wallet/Screens/details/components/status.dart';
 import 'package:noob_wallet/Screens/redirector/redirect.dart';
 import 'package:noob_wallet/components/colors.dart';
+import 'package:noob_wallet/components/roundedButton.dart';
 import 'package:noob_wallet/components/widgets.dart';
 import 'package:candlesticks/candlesticks.dart';
 
@@ -23,13 +24,11 @@ class _DetailsScreenState extends State<DetailsScreen> {
   _DetailsScreenState({required this.text});
   final String text;
 
-  //int activeIndex = 0;
-
+  int activeIndex = 0;
   List<Candle> candles = [];
   bool isloading = true;
   String idCoin = '';
-
-  //final List<String> chartTimes = ["Today", "1W", "1M", "3M", "6M", "1Y"];
+  final List<String> chartTimes = ["Today", "1W", "1M", "3M", "6M", "1Y"];
   Future<void> getId() async {
     final response = await http.get(Uri.parse(
         'https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&sparkline=false'));
@@ -108,35 +107,135 @@ class _DetailsScreenState extends State<DetailsScreen> {
               height: 30,
             ),
             Container(
-              width: 450,
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(29),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.blueGrey.withOpacity(0.2),
-                    spreadRadius: 5,
-                    blurRadius: 7,
-                    offset: const Offset(0, 2), // changes position of shadow
-                  ),
-                ],
-              ),
-              padding: const EdgeInsets.only(
-                right: 20.0,
-                left: 30.0,
-                top: 20.0,
-                bottom: 20.0,
-              ),
-              child: SizedBox(
-                height: 350.0,
-                width: 650.0,
-                child: Candlesticks(
-                  candles: candles,
+                width: 450,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(29),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.blueGrey.withOpacity(0.2),
+                      spreadRadius: 5,
+                      blurRadius: 7,
+                      offset: const Offset(0, 2), // changes position of shadow
+                    ),
+                  ],
                 ),
-              ),
+                padding: const EdgeInsets.only(
+                  right: 10.0,
+                  left: 20.0,
+                  top: 20.0,
+                  bottom: 20.0,
+                ),
+                child: Column(
+                  children: <Widget>[
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: chartTimes.map((e) {
+                          int currentIndex = chartTimes.indexOf(e);
+                          return InkWell(
+                            onTap: () {
+                              setState(() {
+                                activeIndex = currentIndex;
+                              });
+                            },
+                            child: Container(
+                              color: currentIndex == activeIndex
+                                  ? const Color.fromARGB(255, 218, 237, 253)
+                                  : const Color.fromARGB(0, 179, 233, 247),
+                              padding: const EdgeInsets.symmetric(
+                                vertical: 5.0,
+                                horizontal: 10.0,
+                              ),
+                              child: Text(
+                                e,
+                                style: const TextStyle(
+                                  color: Colors.black87,
+                                ),
+                              ),
+                            ),
+                          );
+                        }).toList(),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    SizedBox(
+                      height: 300.0,
+                      width: 950.0,
+                      child: Candlesticks(
+                        candles: candles,
+                      ),
+                    ),
+                  ],
+                )),
+            const SizedBox(
+              height: 40,
             ),
+            Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: const <Widget>[
+                  Exchange(
+                    icon: Icon(
+                      Icons.send,
+                      color: Color.fromARGB(255, 5, 71, 102),
+                    ),
+                    text: 'Send',
+                  ),
+                  Exchange(
+                    icon: Icon(
+                      Icons.call_received,
+                      color: Color.fromARGB(255, 5, 71, 102),
+                    ),
+                    text: 'Withdraw',
+                  )
+                ]),
           ],
         )),
+      ),
+    );
+  }
+}
+
+class Exchange extends StatelessWidget {
+  const Exchange({
+    Key? key,
+    required this.text,
+    required this.icon,
+  }) : super(key: key);
+
+  final Widget icon;
+  final String text;
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: 150,
+      child: ElevatedButton.icon(
+        onPressed: () {},
+        icon: icon,
+        label: Text(
+          text,
+          style: TextStyle(
+            color: Color.fromARGB(255, 5, 71, 102),
+            fontFamily: 'OpenSans',
+            fontSize: 16,
+            fontWeight: FontWeight.w500,
+          ),
+        ),
+        style: ButtonStyle(
+          backgroundColor: MaterialStateProperty.all(Colors.white),
+          padding: MaterialStateProperty.all(const EdgeInsets.all(20)),
+          shadowColor: MaterialStateProperty.all<Color>(
+              Colors.blueGrey.withOpacity(0.2)),
+          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+            RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(35.0),
+            ),
+          ),
+        ),
       ),
     );
   }
