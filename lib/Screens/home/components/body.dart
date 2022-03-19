@@ -44,7 +44,6 @@ class _BodyHomeState extends State<BodyHome> {
       return coinList;
     } else {
       print(coinList);
-      Fluttertoast.showToast(msg: 'Failed to load coins');
       throw Exception('Failed to load coins');
     }
   }

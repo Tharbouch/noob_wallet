@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:noob_wallet/Screens/details/components/chartmodel.dart';
 import 'package:noob_wallet/Screens/details/components/fetchchartdata.dart';
@@ -5,6 +7,7 @@ import 'package:noob_wallet/Screens/details/components/status.dart';
 import 'package:noob_wallet/Screens/redirector/redirect.dart';
 import 'package:noob_wallet/components/colors.dart';
 import 'package:noob_wallet/components/widgets.dart';
+import 'package:candlesticks/candlesticks.dart';
 
 class DetailsScreen extends StatefulWidget {
   const DetailsScreen({Key? key, required this.text}) : super(key: key);
@@ -20,7 +23,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
   final String text;
   //int activeIndex = 0;
 
-  List<ChartModel> chartdata = [];
+  List<Candle> candles = [];
   bool isloading = true;
 
   //final List<String> chartTimes = ["Today", "1W", "1M", "3M", "6M", "1Y"];
@@ -29,10 +32,11 @@ class _DetailsScreenState extends State<DetailsScreen> {
   void initState() {
     super.initState();
     getChartData();
+    Timer.periodic(const Duration(seconds: 3), (timer) => getChartData());
   }
 
   Future<void> getChartData() async {
-    chartdata = await ChartAPI.fetchChartData();
+    candles = await ChartAPI.fetchChartData();
     setState(() {
       isloading = false;
     });
@@ -81,7 +85,34 @@ class _DetailsScreenState extends State<DetailsScreen> {
             const SizedBox(
               height: 30,
             ),
-            Column(),
+            Container(
+              width: 450,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(29),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.blueGrey.withOpacity(0.2),
+                    spreadRadius: 5,
+                    blurRadius: 7,
+                    offset: const Offset(0, 2), // changes position of shadow
+                  ),
+                ],
+              ),
+              padding: const EdgeInsets.only(
+                right: 20.0,
+                left: 30.0,
+                top: 20.0,
+                bottom: 20.0,
+              ),
+              child: SizedBox(
+                height: 350.0,
+                width: 650.0,
+                child: Candlesticks(
+                  candles: candles,
+                ),
+              ),
+            ),
           ],
         )),
       ),

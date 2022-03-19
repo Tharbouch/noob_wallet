@@ -1,21 +1,19 @@
 import 'dart:convert';
+import 'package:candlesticks/candlesticks.dart';
 import 'package:http/http.dart' as http;
-import 'package:noob_wallet/Screens/details/components/chartmodel.dart';
 
 class ChartAPI {
-  static Future<List<ChartModel>> fetchChartData() async {
+  static Future<List<Candle>> fetchChartData() async {
     final response = await http.get(Uri.parse(
-        'https://api.coingecko.com/api/v3/coins/bitcoin/ohlc?vs_currency=usd&days=25'));
+        'https://api.binance.com/api/v3/klines?symbol=BTCUSDT&interval=1m'));
 
     if (response.statusCode == 200) {
-      List datacChart = [];
-
-      for (var i in jsonDecode(response.body)) {
-        i[0] = DateTime.fromMillisecondsSinceEpoch(i[0]);
-        print(i[0].runtimeType);
-        datacChart.add(i);
-      }
-      return ChartModel.chartdata(datacChart);
+      List<Candle> datacChart = [];
+      return (jsonDecode(response.body) as List<dynamic>)
+          .map((e) => Candle.fromJson(e))
+          .toList()
+          .reversed
+          .toList();
     } else {
       throw Exception('Failed to load chart data');
     }
