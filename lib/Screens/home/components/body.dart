@@ -36,13 +36,14 @@ class _BodyHomeState extends State<BodyHome> {
         }
         if (mounted) {
           setState(() {
-            isloading = false;
+            coinList;
           });
         }
       }
       coinList = coinList.sublist(0, size);
       return coinList;
     } else {
+      print(coinList);
       Fluttertoast.showToast(msg: 'Failed to load coins');
       throw Exception('Failed to load coins');
     }
@@ -50,9 +51,10 @@ class _BodyHomeState extends State<BodyHome> {
 
   @override
   void initState() {
+    fetchCoin();
     //hena lwe9t bash idir reload l data men daq api
+    Timer.periodic(const Duration(seconds: 3), (timer) => fetchCoin());
     super.initState();
-    Timer.periodic(const Duration(seconds: 2), (timer) => fetchCoin());
   }
 
   @override

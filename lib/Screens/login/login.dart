@@ -80,12 +80,12 @@ class _LoginState extends State<Login> {
                       controller: passwordController,
                       hintText: 'Password',
                       validator: (value) {
-                        RegExp regex = RegExp(r'^.{8,}$');
+                        RegExp regex = RegExp(r'^.{6,}$');
                         if (value!.isEmpty) {
                           return ("Password is required for login");
                         }
                         if (!regex.hasMatch(value)) {
-                          return ("Enter Valid Password(Min. 8 Character)");
+                          return ("Enter Valid Password(Min. 6 Character)");
                         }
                         return null;
                       },
