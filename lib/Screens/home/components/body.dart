@@ -17,7 +17,7 @@ class BodyHome extends StatefulWidget {
 class _BodyHomeState extends State<BodyHome> {
   Future<List<Coin>> fetchCoin() async {
     coinList = [];
-    bool isloading = true;
+    bool isloading = false ;
     // hena kayn api menin kanjibo data
 
     final response = await http.get(Uri.parse(
@@ -40,7 +40,7 @@ class _BodyHomeState extends State<BodyHome> {
           });
         }
       }
-      coinList = coinList.sublist(0, size);
+      //coinList = coinList.sublist(0, size);
       return coinList;
     } else {
       print(coinList);
@@ -52,7 +52,7 @@ class _BodyHomeState extends State<BodyHome> {
   void initState() {
     fetchCoin();
     //hena lwe9t bash idir reload l data men daq api
-    Timer.periodic(const Duration(seconds: 3), (timer) => fetchCoin());
+    Timer.periodic(const Duration(seconds: 500), (timer) => fetchCoin());
     super.initState();
   }
 
