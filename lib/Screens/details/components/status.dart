@@ -44,16 +44,16 @@ class Status extends StatelessWidget {
                 height: 8.0,
               ),
               const Text(
-                "\$3,432.92",
+                "\$47,043.28",
                 style: TextStyle(
                   color: Colors.black87,
                   fontSize: 26.0,
                 ),
               ),
               Text(
-                "+0.15%",
+                "-1.51%",
                 style: TextStyle(
-                  color: Colors.green[400],
+                  color: Colors.red[400],
                   fontSize: 16.0,
                 ),
               ),
@@ -70,7 +70,7 @@ class Status extends StatelessWidget {
                 height: 8.0,
               ),
               const Text(
-                "\$1,360,647.312",
+                "\$31,771,866,277",
                 style: TextStyle(
                   color: Colors.black87,
                   fontSize: 26.0,
@@ -79,7 +79,7 @@ class Status extends StatelessWidget {
               Text(
                 "+16.80%",
                 style: TextStyle(
-                  color: Colors.green[400],
+                  color: Colors.red[400],
                   fontSize: 16.0,
                 ),
               ),

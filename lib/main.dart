@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         fontFamily: 'OpenSans',
         primaryColor: mainColor,
-        scaffoldBackgroundColor: Color.fromARGB(255, 241, 245, 245),
+        scaffoldBackgroundColor: const Color.fromARGB(255, 241, 245, 245),
       ),
       home: const Intro(), //starting the application
     );

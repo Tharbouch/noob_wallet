@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:noob_wallet/Screens/settings/bodysetting.dart';
 
 
 class SettingScreen extends StatefulWidget {
@@ -12,7 +13,7 @@ class _SettingScreenState extends State<SettingScreen> {
   @override
   Widget build(BuildContext context) {
     return const  Scaffold(
-      
+      body: ScreenSetting(),
     );
   }
 }

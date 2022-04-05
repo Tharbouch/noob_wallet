@@ -19,10 +19,10 @@ class Coin {
 
   factory Coin.fromJson(Map<String, dynamic> json) {
     return Coin(
-      name: json['name'],
-      imageUrl: json['image'],
-      price: json['current_price'],
-    );
+        name: json['name'],
+        imageUrl: json['image'],
+        price: json['current_price'],
+        changePercentage: json['price_change_percentage_24h_in_currency']);
   }
 }
 

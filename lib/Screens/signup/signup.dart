@@ -260,6 +260,7 @@ class _SignUpState extends State<SignUp> {
     userModel.uid = user.uid;
     userModel.firstName = firstNameController.text;
     userModel.secondName = secondNameController.text;
+    userModel.id = await getUserDetails() + 1;
     await firebaseFirestore
         .collection("users")
         .doc(user.uid)
@@ -271,5 +272,23 @@ class _SignUpState extends State<SignUp> {
       MaterialPageRoute(builder: (builder) => navigateToLogIn()),
       (route) => false,
     );
+  }
+
+  static getUserDetails() async {
+    List<dynamic> items = [];
+    try {
+      await FirebaseFirestore.instance
+          .collection('users')
+          .get()
+          .then((QuerySnapshot querySnapshot) {
+        for (var doc in querySnapshot.docs) {
+          items.add(doc);
+        }
+      });
+      return items.length;
+    } catch (e) {
+      print(e.toString());
+      return null;
+    }
   }
 }

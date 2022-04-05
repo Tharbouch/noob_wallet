@@ -7,7 +7,6 @@ import 'package:noob_wallet/Screens/details/components/fetchchartdata.dart';
 import 'package:noob_wallet/Screens/details/components/status.dart';
 import 'package:noob_wallet/Screens/redirector/redirect.dart';
 import 'package:noob_wallet/components/colors.dart';
-import 'package:noob_wallet/components/roundedButton.dart';
 import 'package:noob_wallet/components/widgets.dart';
 import 'package:candlesticks/candlesticks.dart';
 
@@ -28,7 +27,17 @@ class _DetailsScreenState extends State<DetailsScreen> {
   List<Candle> candles = [];
   bool isloading = true;
   String idCoin = '';
-  final List<String> chartTimes = ["Today", "1W", "1M", "3M", "6M", "1Y"];
+  final List<String> chartTimes = [
+    "1m",
+    "5m",
+    "15m",
+    "1h",
+    "4h",
+    "1D",
+    "3D",
+    "1M"
+  ];
+
   Future<void> getId() async {
     final response = await http.get(Uri.parse(
         'https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&sparkline=false'));
@@ -57,7 +66,8 @@ class _DetailsScreenState extends State<DetailsScreen> {
   }
 
   Future<void> getChartData({required String id}) async {
-    candles = await ChartAPI.fetchChartData(id: id);
+    candles = await ChartAPI.fetchChartData(
+        id: id, intervale: chartTimes[activeIndex]);
     setState(() {
       isloading = false;
     });
@@ -78,12 +88,11 @@ class _DetailsScreenState extends State<DetailsScreen> {
               size: 28,
             ),
             onPressed: () {
-              Navigator.pushAndRemoveUntil(
+              Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(
                   builder: (builder) => const Redirector(),
                 ), // redirecting to SignUP page
-                (route) => false,
               );
             },
           ),
@@ -96,17 +105,17 @@ class _DetailsScreenState extends State<DetailsScreen> {
       body: Container(
         padding: const EdgeInsets.symmetric(horizontal: 20),
         child: SingleChildScrollView(
-            child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            const SizedBox(
-              height: 20,
-            ),
-            Status(themeData: themeData),
-            const SizedBox(
-              height: 30,
-            ),
-            Container(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const SizedBox(
+                height: 20,
+              ),
+              Status(themeData: themeData),
+              const SizedBox(
+                height: 30,
+              ),
+              Container(
                 width: 450,
                 decoration: BoxDecoration(
                   color: Colors.white,
@@ -136,6 +145,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                           int currentIndex = chartTimes.indexOf(e);
                           return InkWell(
                             onTap: () {
+                              print(activeIndex);
                               setState(() {
                                 activeIndex = currentIndex;
                               });
@@ -170,70 +180,21 @@ class _DetailsScreenState extends State<DetailsScreen> {
                       ),
                     ),
                   ],
-                )),
-            const SizedBox(
-              height: 40,
-            ),
-            Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: const <Widget>[
-                  Exchange(
-                    icon: Icon(
-                      Icons.send,
-                      color: Color.fromARGB(255, 5, 71, 102),
-                    ),
-                    text: 'Send',
-                  ),
-                  Exchange(
-                    icon: Icon(
-                      Icons.call_received,
-                      color: Color.fromARGB(255, 5, 71, 102),
-                    ),
-                    text: 'Withdraw',
-                  )
-                ]),
-          ],
-        )),
-      ),
-    );
-  }
-}
-
-class Exchange extends StatelessWidget {
-  const Exchange({
-    Key? key,
-    required this.text,
-    required this.icon,
-  }) : super(key: key);
-
-  final Widget icon;
-  final String text;
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      width: 150,
-      child: ElevatedButton.icon(
-        onPressed: () {},
-        icon: icon,
-        label: Text(
-          text,
-          style: TextStyle(
-            color: Color.fromARGB(255, 5, 71, 102),
-            fontFamily: 'OpenSans',
-            fontSize: 16,
-            fontWeight: FontWeight.w500,
-          ),
-        ),
-        style: ButtonStyle(
-          backgroundColor: MaterialStateProperty.all(Colors.white),
-          padding: MaterialStateProperty.all(const EdgeInsets.all(20)),
-          shadowColor: MaterialStateProperty.all<Color>(
-              Colors.blueGrey.withOpacity(0.2)),
-          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-            RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(35.0),
-            ),
+                ),
+              ),
+              const SizedBox(
+                height: 60,
+              ),
+              Exchange(
+                icon: const Icon(
+                  Icons.history,
+                  color: Color.fromARGB(255, 5, 71, 102),
+                ),
+                text: 'Predict Price',
+                color: Colors.white,
+                press: () {},
+              )
+            ],
           ),
         ),
       ),

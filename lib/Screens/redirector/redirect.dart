@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:noob_wallet/Screens/home/home.dart';
 import 'package:noob_wallet/Screens/login/login.dart';
 import 'package:noob_wallet/Screens/news/news.dart';
-import 'package:noob_wallet/Screens/prediction/prediction_dash.dart';
+//import 'package:noob_wallet/Screens/prediction/prediction_dash.dart';
+import 'package:noob_wallet/Screens/settings/settings.dart';
 import 'package:noob_wallet/components/colors.dart';
 import 'package:noob_wallet/components/widgets.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -128,12 +129,12 @@ class _RedirectorState extends State<Redirector> {
       case TabItem.transactionsHistory:
       // return HomeScreen();
       case TabItem.prediction:
-        return Prediction();
+      //return Prediction();
       case TabItem.news:
         return const NewsScreen();
       // return HomeScreen()
       case TabItem.setting:
-      // return HomeScreen()
+        return const SettingScreen();
       default:
     }
   }

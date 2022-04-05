@@ -25,7 +25,13 @@ class NewsCard extends StatelessWidget {
               boxShadow: const [
                 BoxShadow(
                   color: Color.fromARGB(255, 228, 226, 226),
-                  offset: Offset(0, 4),
+                  offset: Offset(4, 4),
+                  blurRadius: 10,
+                  spreadRadius: 1,
+                ),
+                BoxShadow(
+                  color: Color.fromARGB(255, 228, 226, 226),
+                  offset: Offset(-4, -4),
                   blurRadius: 10,
                   spreadRadius: 1,
                 ),

@@ -1,18 +1,25 @@
 import 'package:flutter/material.dart';
+import 'dart:math';
 import 'package:noob_wallet/Screens/details/details.dart';
-import 'package:noob_wallet/Screens/home/components/coinModel.dart';
 
-class CoinCard extends StatelessWidget {
+class CoinCard extends StatefulWidget {
   CoinCard({
     @required this.name = '',
     @required this.imageUrl = '',
     @required this.price = 0,
+    @required this.changePercentage = 0,
   });
 
   String name;
   String imageUrl;
   double price;
+  num changePercentage;
 
+  @override
+  State<CoinCard> createState() => _CoinCardState();
+}
+
+class _CoinCardState extends State<CoinCard> {
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -65,7 +72,7 @@ class CoinCard extends StatelessWidget {
                     width: 50,
                     child: Padding(
                       padding: const EdgeInsets.all(10.0),
-                      child: Image.network(imageUrl),
+                      child: Image.network(widget.imageUrl),
                     ),
                   ),
                 ),
@@ -77,7 +84,7 @@ class CoinCard extends StatelessWidget {
                       FittedBox(
                         fit: BoxFit.scaleDown,
                         child: Text(
-                          name,
+                          widget.name,
                           style: TextStyle(
                             color: Colors.grey[900],
                             fontSize: 18,
@@ -88,14 +95,6 @@ class CoinCard extends StatelessWidget {
                       const SizedBox(
                         height: 10,
                       ),
-                      Text(
-                        price.toDouble().toString(),
-                        style: const TextStyle(
-                          color: Color.fromARGB(255, 0, 0, 0),
-                          fontSize: 15,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
                     ],
                   ),
                 ),
@@ -104,15 +103,39 @@ class CoinCard extends StatelessWidget {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.end,
-                    children: const [
+                    children: [
                       Text(
-                        '\$ PROFIT',
-                        style: TextStyle(
+                        widget.price.toDouble().toString(),
+                        style: const TextStyle(
                           color: Color.fromARGB(255, 0, 0, 0),
-                          fontSize: 20,
+                          fontSize: 18,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      Text(
+                        double.parse((widget.changePercentage)
+                                    .toStringAsFixed(2)) <
+                                0
+                            ? (widget.changePercentage)
+                                    .toStringAsFixed(2)
+                                    .toString() +
+                                '%'
+                            : '+' +
+                                (widget.changePercentage)
+                                    .toStringAsFixed(2)
+                                    .toString() +
+                                '%',
+                        style: TextStyle(
+                          color: widget.changePercentage.toDouble() < 0
+                              ? Colors.red[400]
+                              : Colors.greenAccent[400],
+                          fontSize: 15,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      )
                     ],
                   ),
                 ),
@@ -120,13 +143,12 @@ class CoinCard extends StatelessWidget {
             ),
           ),
           onTap: () {
-            Navigator.pushAndRemoveUntil(
+            Navigator.pushReplacement(
               context,
               MaterialPageRoute(
                   builder: (builder) => DetailsScreen(
-                        text: name,
+                        text: widget.name,
                       )), // redirecting to SignUP page
-              (route) => false,
             );
           },
         ));
