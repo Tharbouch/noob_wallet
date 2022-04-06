@@ -148,6 +148,8 @@ class _CoinCardState extends State<CoinCard> {
               MaterialPageRoute(
                   builder: (builder) => DetailsScreen(
                         text: widget.name,
+                        price: widget.price.toDouble().toString(),
+                        priceChange: widget.changePercentage,
                       )), // redirecting to SignUP page
             );
           },

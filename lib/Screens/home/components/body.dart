@@ -4,7 +4,6 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart';
 import 'package:noob_wallet/Screens/home/components/coinCard.dart';
 import 'package:noob_wallet/Screens/home/components/coinModel.dart';
-import 'package:noob_wallet/Screens/tt/b.dart';
 import 'package:noob_wallet/Screens/wallet/initwallet.dart';
 import 'package:noob_wallet/components/colors.dart';
 import 'package:noob_wallet/components/widgets.dart';

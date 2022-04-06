@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:ffi';
 
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
@@ -11,18 +12,31 @@ import 'package:noob_wallet/components/widgets.dart';
 import 'package:candlesticks/candlesticks.dart';
 
 class DetailsScreen extends StatefulWidget {
-  const DetailsScreen({Key? key, required this.text}) : super(key: key);
+  const DetailsScreen(
+      {Key? key,
+      required this.text,
+      required this.price,
+      required this.priceChange})
+      : super(key: key);
   final String text;
+  final String price;
+  final num priceChange;
 
   @override
   // ignore: no_logic_in_create_state
-  State<DetailsScreen> createState() => _DetailsScreenState(text: text);
+  State<DetailsScreen> createState() =>
+      _DetailsScreenState(text: text, change: priceChange, price: price);
 }
 
 class _DetailsScreenState extends State<DetailsScreen> {
-  _DetailsScreenState({required this.text});
+  _DetailsScreenState(
+      {required this.text, required this.price, required this.change});
   final String text;
-
+  final String price;
+  final num change;
+  dynamic data;
+  String output = '';
+  String urlf = 'http://127.0.0.1:5000/';
   int activeIndex = 0;
   List<Candle> candles = [];
   bool isloading = true;
@@ -111,7 +125,12 @@ class _DetailsScreenState extends State<DetailsScreen> {
               const SizedBox(
                 height: 20,
               ),
-              Status(themeData: themeData),
+              Status(
+                price: price,
+                idCoin: idCoin,
+                change: change,
+                themeData: themeData,
+              ),
               const SizedBox(
                 height: 30,
               ),
@@ -185,15 +204,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
               const SizedBox(
                 height: 60,
               ),
-              Exchange(
-                icon: const Icon(
-                  Icons.history,
-                  color: Color.fromARGB(255, 5, 71, 102),
-                ),
-                text: 'Predict Price',
-                color: Colors.white,
-                press: () {},
-              )
+              ElevatedButton(onPressed: () {}, child: const Text("hi"))
             ],
           ),
         ),

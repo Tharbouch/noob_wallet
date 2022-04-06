@@ -16,7 +16,7 @@ class Redirector extends StatefulWidget {
   State<Redirector> createState() => _RedirectorState();
 }
 
-enum TabItem { home, transactionsHistory, prediction, news, setting }
+enum TabItem { home, news, setting }
 
 class _RedirectorState extends State<Redirector> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -26,8 +26,6 @@ class _RedirectorState extends State<Redirector> {
   TabItem _currentItem = TabItem.home;
   final List<TabItem> _bottomTabs = [
     TabItem.home,
-    TabItem.transactionsHistory,
-    TabItem.prediction,
     TabItem.news,
     TabItem.setting
   ];
@@ -44,7 +42,9 @@ class _RedirectorState extends State<Redirector> {
               color: mainColor,
               size: 28,
             ),
-            onPressed: () {},
+            onPressed: () {
+              print("object");
+            },
           ),
           title: _titel(_currentItem),
           right: IconButton(
@@ -91,10 +91,6 @@ class _RedirectorState extends State<Redirector> {
     switch (item) {
       case TabItem.home:
         return Icons.account_balance_wallet;
-      case TabItem.transactionsHistory:
-        return Icons.history;
-      case TabItem.prediction:
-        return Icons.analytics;
       case TabItem.news:
         return Icons.newspaper;
       case TabItem.setting:
@@ -109,10 +105,6 @@ class _RedirectorState extends State<Redirector> {
     switch (item) {
       case TabItem.home:
         return 'Wallet';
-      case TabItem.transactionsHistory:
-        return 'Transactions';
-      case TabItem.prediction:
-        return "Prediction";
       case TabItem.news:
         return "News";
       case TabItem.setting:
@@ -126,9 +118,6 @@ class _RedirectorState extends State<Redirector> {
     switch (_currentItem) {
       case TabItem.home:
         return const HomeScreen();
-      case TabItem.transactionsHistory:
-      // return HomeScreen();
-      case TabItem.prediction:
       //return Prediction();
       case TabItem.news:
         return const NewsScreen();

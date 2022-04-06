@@ -4,9 +4,15 @@ class Status extends StatelessWidget {
   const Status({
     Key? key,
     required this.themeData,
+    required this.change,
+    required this.idCoin,
+    required this.price,
   }) : super(key: key);
 
   final ThemeData themeData;
+  final String idCoin;
+  final num change;
+  final String price;
 
   @override
   Widget build(BuildContext context) {
@@ -37,24 +43,29 @@ class Status extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "1 BTC / USD",
+                "1" + idCoin + "/ USD",
                 style: themeData.textTheme.caption,
               ),
               const SizedBox(
                 height: 8.0,
               ),
-              const Text(
-                "\$47,043.28",
-                style: TextStyle(
+              Text(
+                price,
+                style: const TextStyle(
                   color: Colors.black87,
                   fontSize: 26.0,
                 ),
               ),
               Text(
-                "-1.51%",
+                double.parse((change).toStringAsFixed(2)) < 0
+                    ? (change).toStringAsFixed(2).toString() + '%'
+                    : '+' + (change).toStringAsFixed(2).toString() + '%',
                 style: TextStyle(
-                  color: Colors.red[400],
-                  fontSize: 16.0,
+                  color: change.toDouble() < 0
+                      ? Colors.red[400]
+                      : Colors.greenAccent[400],
+                  fontSize: 15,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
             ],
