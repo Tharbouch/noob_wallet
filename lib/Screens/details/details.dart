@@ -238,7 +238,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                                 ),
                                 SizedBox(height: 75),
                                 Text(
-                                  "47856.68\$",
+                                  "", // Still working to link LSTM model with the application
                                   style: TextStyle(
                                     fontSize: 20,
                                     fontWeight: FontWeight.bold,

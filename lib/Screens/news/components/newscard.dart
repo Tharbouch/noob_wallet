@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class NewsCard extends StatelessWidget {
   NewsCard({
     @required this.titel = '',
     @required this.imageUrl = '',
     @required this.description = '',
+    required this.link,
   });
 
   String titel;
   String imageUrl;
   String description;
+  String link;
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +20,7 @@ class NewsCard extends StatelessWidget {
         padding: const EdgeInsets.only(top: 15, left: 5, right: 5),
         child: GestureDetector(
           child: Container(
-            padding: EdgeInsets.all(10.0),
+            padding: const EdgeInsets.all(10.0),
             height: 100,
             decoration: BoxDecoration(
               color: Colors.white,
@@ -75,7 +78,18 @@ class NewsCard extends StatelessWidget {
               ],
             ),
           ),
-          onTap: () {},
+          onTap: () => _launchInBrowser(link),
         ));
+  }
+
+  Future<void> _launchInBrowser(String url) async {
+    if (!await launch(
+      url,
+      forceSafariVC: false,
+      forceWebView: false,
+      headers: <String, String>{'my_header_key': 'my_header_value'},
+    )) {
+      throw 'Could not launch $url';
+    }
   }
 }

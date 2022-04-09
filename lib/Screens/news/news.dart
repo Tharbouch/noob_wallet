@@ -50,6 +50,7 @@ class _NewsScreenState extends State<NewsScreen> {
                         titel: newsData[index].title,
                         description: newsData[index].description,
                         imageUrl: newsData[index].images,
+                        link: newsData[index].link,
                       );
                     }),
               ]),
