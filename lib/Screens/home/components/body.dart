@@ -44,6 +44,12 @@ class _BodyHomeState extends State<BodyHome> {
     Timer.periodic(const Duration(seconds: 2), (timer) => fetchCoin());
   }
 
+  @override
+  void dispose() {
+    fetchCoin();
+    super.dispose();
+  }
+
   Future<List<Coin>> fetchCoin() async {
     coinList = [];
     // hena kayn api menin kanjibo data
@@ -71,7 +77,6 @@ class _BodyHomeState extends State<BodyHome> {
       coinList = coinList.sublist(0, size);
       return coinList;
     } else {
-      Fluttertoast.showToast(msg: 'Failed to load coins');
       throw Exception('Failed to load coins');
     }
   }

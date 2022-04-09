@@ -11,6 +11,8 @@ import 'package:noob_wallet/components/colors.dart';
 import 'package:noob_wallet/components/widgets.dart';
 import 'package:candlesticks/candlesticks.dart';
 
+import 'components/function.dart';
+
 class DetailsScreen extends StatefulWidget {
   const DetailsScreen(
       {Key? key,
@@ -34,9 +36,9 @@ class _DetailsScreenState extends State<DetailsScreen> {
   final String text;
   final String price;
   final num change;
-  dynamic data;
-  String output = '';
-  String urlf = 'http://127.0.0.1:5000/';
+  String url = 'http//192.168.0.154:5000/api';
+  var data;
+  String output = 'Initial Output';
   int activeIndex = 0;
   List<Candle> candles = [];
   bool isloading = true;
@@ -204,7 +206,50 @@ class _DetailsScreenState extends State<DetailsScreen> {
               const SizedBox(
                 height: 60,
               ),
-              ElevatedButton(onPressed: () {}, child: const Text("hi"))
+              Exchange(
+                  text: "Predict",
+                  icon: const Icon(Icons.history, color: mainColor),
+                  press: () {
+                    showModalBottomSheet(
+                      context: context,
+                      backgroundColor: Colors.black.withOpacity(0),
+                      barrierColor: Colors.black.withOpacity(0.8),
+                      builder: (context) => Container(
+                          height: 300,
+                          decoration: const BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(25),
+                              topRight: Radius.circular(25),
+                            ),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 25, vertical: 30),
+                            child: Column(
+                              children: const [
+                                SizedBox(height: 45),
+                                Text(
+                                  "Predicted Price",
+                                  style: TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                SizedBox(height: 75),
+                                Text(
+                                  "47856.68\$",
+                                  style: TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          )),
+                    );
+                  },
+                  color: Colors.white),
             ],
           ),
         ),
